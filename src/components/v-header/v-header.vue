@@ -1,32 +1,60 @@
-<!--@TODO 未手写-->
 <template>
   <div class="header">
     <div class="content-wrapper">
       <div class="avatar">
         <img width="64"
              height="64"
-             src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1895058483,1645381756&fm=173&app=49&f=JPEG?w=312&h=208&s=FE13208CC2113DC6308A23800300709E" />
+             :src="seller.avatar" />
       </div>
       <div class="content">
         <div class="title">
           <span class="brand"></span>
-          <span class="name">123</span>
+          <span class="name">{{seller.name}}</span>
         </div>
-        <div class="description">{{2}}/{{3}}分钟送达</div>
+        <div class="description">{{seller.description}}/{{seller.deliveryTime}}</div>
+        <div v-if="true"
+             class="support">
+          <support-ico :size=1
+                       class="support-ico"
+                       :type="seller.supports[0].type"></support-ico>
+          <span class="text">{{seller.supports[0].description}}</span>
+        </div>
       </div>
-
+      <div v-if="true"
+           class="support-count">
+        <span class="count">{{seller.supports.length}}个</span>
+        <i class="icon-keyboard_arrow_right"></i>
+      </div>
     </div>
     <div class="bulletin-wrapper">
-      <span class="bulletin-title"></span><span class="bulletin-text">{{1}}</span>
+      <span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
       <i class="icon-keyboard_arrow_right"></i>
+    </div>
+    <div class="background">
+      <img
+           width="100%"
+           height="100%"
+           :src="seller.avatar" />
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 
+import SupportIco from '../support-ico/support-ico.vue'
 export default {
-
+  name: 'v-header',
+  components: {
+    SupportIco
+  },
+  props: {
+    seller: {
+      type: Object,
+      default() {
+        return {}
+      }
+    }
+  }
 }
 </script>
 
@@ -57,7 +85,6 @@ export default {
 
     .content {
       flex: 1;
-      color: red;
 
       .title {
         display: flex;
@@ -84,7 +111,89 @@ export default {
         line-height: 12px;
         font-size: $fontsize-small;
       }
+
+      .support {
+        display: flex;
+        align-items: center;
+
+        .support-ico {
+          margin-right: 4px;
+        }
+
+        .text {
+          line-height: 12px;
+          font-size: $fontsize-small-s;
+        }
+      }
     }
+
+    .support-count {
+      position: absolute;
+      right: 12px;
+      bottom: 14px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      border-radius: 14px;
+      background: $color-background-sss;
+
+      .count {
+        font-size: $fontsize-small-s;
+      }
+
+      .icon-keyboard_arrow_right {
+        margin-left: 2px;
+        line-height: 24px;
+        font-size: $fontsize-small-s;
+      }
+    }
+  }
+
+  .bulletin-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 8px;
+    background: $color-background-sss;
+
+    .bulletin-title {
+      flex: 0 0 22px;
+      width: 22px;
+      height: 12px;
+      margin-right: 4px;
+      background-size: 22px 12px;
+      bg-image('brand');
+      background-repeat: no-repeat;
+    }
+
+    .bulletin-text {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: $fontsize-small-s;
+    }
+
+    .icon-keyboard_arrow_right {
+      flex: 0 0 10px;
+      width: 10px;
+      font-size: $fontsize-small-s;
+    }
+  }
+
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: blur(10px);
   }
 }
 </style>

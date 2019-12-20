@@ -1,16 +1,31 @@
 <template>
   <div id="app">
-    <v-header />
+    <v-header :seller="seller" />
   </div>
 </template>
 
 <script>
 import VHeader from './components/v-header/v-header.vue'
-
+import { getSeller } from 'api'
 export default {
   name: 'app',
   components: {
     VHeader
+  },
+  data() {
+    return {
+      seller: {}
+    }
+  },
+  created() {
+    this._getSeller()
+  },
+  methods: {
+    _getSeller() {
+      getSeller({}).then(res => {
+        this.seller = res
+      })
+    }
   }
 }
 </script>
