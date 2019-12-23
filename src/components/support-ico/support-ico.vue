@@ -1,4 +1,3 @@
-<!--@TODO 为手写-->
 <template>
   <span class="support-ico" :class="iconCls"></span>
 </template>
@@ -25,7 +24,6 @@
 
 <style lang="stylus" scoped>
   @import "~common/stylus/mixin"
-
   .support-ico
     display: inline-block
     background-repeat: no-repeat
