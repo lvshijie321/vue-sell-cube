@@ -1,20 +1,52 @@
 <template>
   <div id="app">
     <v-header :seller="seller" />
+    <!-- <div class="tab-wrapper"> -->
+    <tab :tabs="tabs"></tab>
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
 import VHeader from './components/v-header/v-header.vue'
+import Tab from 'components/tab/tab'
 import { getSeller } from 'api'
 export default {
   name: 'app',
   components: {
-    VHeader
+    VHeader,
+    Tab
   },
   data() {
     return {
       seller: {}
+    }
+  },
+  computed: {
+    tabs() {
+      return [
+        {
+          label: '商品',
+          // component: Goods,
+          data: {
+            seller: this.seller
+          }
+        },
+        {
+          label: '评论',
+          // component: Ratings,
+          data: {
+            seller: this.seller
+          }
+        },
+        {
+          label: '商家',
+          // component: Seller,
+          data: {
+            seller: this.seller
+          }
+        }
+      ]
     }
   },
   created() {
@@ -24,6 +56,7 @@ export default {
     _getSeller() {
       getSeller({}).then(res => {
         this.seller = res
+        console.log(this.seller)
       })
     }
   }

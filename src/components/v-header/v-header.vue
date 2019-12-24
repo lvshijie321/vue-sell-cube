@@ -1,5 +1,6 @@
 <template>
-  <div class="header">
+  <div class="header" @click="showDetail">
+
     <div class="content-wrapper">
       <div class="avatar">
         <img width="64"
@@ -12,7 +13,7 @@
           <span class="name">{{seller.name}}</span>
         </div>
         <div class="description">{{seller.description}}/{{seller.deliveryTime}}</div>
-        <div v-if="true"
+        <div v-if="seller.supports"
              class="support">
           <support-ico :size=1
                        class="support-ico"
@@ -20,7 +21,7 @@
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
-      <div v-if="true"
+      <div v-if="seller.supports"
            class="support-count">
         <span class="count">{{seller.supports.length}}个</span>
         <i class="icon-keyboard_arrow_right"></i>
@@ -46,6 +47,18 @@ export default {
   name: 'v-header',
   components: {
     SupportIco
+  },
+  methods: {
+    showDetail() {
+      // 获取组件实例，$create 方法执行后（即便不执行 this.headerDetailComp.show()），headerDetail组件节点会在放在 body 下面，和 id=app 平级
+      this.headerDetailComp = this.headerDetailComp || this.$createHeaderDetail({
+        $props: {
+          seller: 'seller'
+        }
+      })
+      // 调用组件内部函数
+      this.headerDetailComp.show()
+    }
   },
   props: {
     seller: {

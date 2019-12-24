@@ -59,7 +59,7 @@
         margin-right: 22px
         background-size: 20px 20px
         &:last-child
-          margin-right: 0
+          margin-right :0
         &.on
           bg-image('star48_on')
         &.half
